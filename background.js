@@ -1,6 +1,20 @@
 (() => {
   console.log("znuny-styler: service worker loaded");
 
+  // let customStyle = `
+  //   :root {
+  //     --font-size-sm: 10px !important;
+  //     --main-font-size: 11px !important;
+  //     --padding-xs: 2px !important;
+  //     --padding-sm: 2px !important;
+  //     --padding-md: 2px !important;
+  //   }
+
+  //   .Handle.ui-resizable-handle {
+  //     background: white !important;
+  //   }
+  // `;
+
   function setVariables() {
     if (!document.documentElement) {
       return;
@@ -19,13 +33,32 @@
     console.log("znuny-styler: style was applied");
   }
 
+  function isScriptableTabUrl(url) {
+    if (!url) {
+      return false;
+    }
+
+    try {
+      const parsedUrl = new URL(url);
+
+      if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+        return false;
+      }
+
+      return url.indexOf("znuny") !== -1 || url.indexOf("otrs") !== -1;
+    } catch {
+      return false;
+    }
+  }
+
   chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (changeInfo.status !== "complete" || tab.url?.startsWith("chrome://")) {
+    if (changeInfo.status !== "complete" || !isScriptableTabUrl(tab.url)) {
       return;
     }
 
     chrome.scripting.executeScript({
       target: { tabId },
+      // css: customStyle
       func: setVariables
     }).catch((error) => {
       console.error("znuny-styler: could not inject script", error);

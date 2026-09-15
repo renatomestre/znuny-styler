@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "znuny-styler",
   "author": "Renato Mestre",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Make Znuny easier to use.",
   "icons": {
     "16": "icons/icon-16.png",
@@ -14,11 +14,11 @@
     "service_worker": "background.js"
   },
   "permissions": [
-    "scripting",
-    "tabs"
+    "activeTab",
+    "scripting"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "https://*/znuny/*"
   ],
   "action": {
     "default_title": "znuny-styler enabled",
