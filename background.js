@@ -1,5 +1,7 @@
 (() => {
-  console.log("znuny-styler: service worker loaded");
+  const extensionApi = globalThis.browser ?? globalThis.chrome;
+
+  console.log("znuny-styler: background script loaded");
 
   // let customStyle = `
   //   :root {
@@ -51,12 +53,12 @@
     }
   }
 
-  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  extensionApi.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status !== "complete" || !isScriptableTabUrl(tab.url)) {
       return;
     }
 
-    chrome.scripting.executeScript({
+    extensionApi.scripting.executeScript({
       target: { tabId },
       // css: customStyle
       func: setVariables
