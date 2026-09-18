@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "znuny-styler",
   "author": "Renato Mestre",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Make Znuny easier to use.",
   "browser_specific_settings": {
     "gecko": {
