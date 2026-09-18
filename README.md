@@ -1,3 +1,13 @@
-The extension affects the page DOM. It cannot style content inside cross-origin frames or closed shadow roots.
+# How to contribute
+
+1. Clone the code:
+
+    > git clone \<url>
+
+2. Run multi-browser package:
+
+    > python .\package.py
+
+3. Import from specific browser in 'dist folder
 
 Made with 💚 and 🤖
