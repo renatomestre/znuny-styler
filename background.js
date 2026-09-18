@@ -3,23 +3,27 @@
 
   console.log("znuny-styler: background script loaded");
 
-  // let customStyle = `
-  //   :root {
-  //     --font-size-sm: 10px !important;
-  //     --main-font-size: 11px !important;
-  //     --padding-xs: 2px !important;
-  //     --padding-sm: 2px !important;
-  //     --padding-md: 2px !important;
-  //   }
-
-  //   .Handle.ui-resizable-handle {
-  //     background: white !important;
-  //   }
-  // `;
-
-  function setVariables() {
+  function run() {
     if (!document.documentElement) {
       return;
+    }
+
+    const navigation = document.getElementById("Navigation");
+    const toolbar = document.getElementById("ToolBar");
+    const toolbarRow = document.querySelector(".toolbar-row");
+    const toolbarToggle = document.getElementById("ToolBar-toggle");
+
+    toolbarRow?.style.setProperty("border", "none", "important");
+    toolbarToggle?.style.setProperty("display", "none", "important");
+
+    if (navigation && toolbar) {
+      toolbar.style.setProperty("float", "left", "important");
+      toolbar.style.setProperty("margin-top", "0px", "important");
+      toolbar.querySelectorAll(":scope li").forEach((element) => {
+        element.style.setProperty("float", "inline-end", "important");
+      });
+
+      navigation.appendChild(toolbar);
     }
 
     document.documentElement.style.setProperty("--font-size-sm", "10px", "important");
@@ -60,8 +64,7 @@
 
     extensionApi.scripting.executeScript({
       target: { tabId },
-      // css: customStyle
-      func: setVariables
+      func: run
     }).catch((error) => {
       console.error("znuny-styler: could not inject script", error);
     });
