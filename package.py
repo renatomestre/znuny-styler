@@ -10,7 +10,7 @@ def main():
 
     dist_directory.mkdir(exist_ok=True)
 
-    for target in ["chrome", "firefox"]:
+    for target in ["chrome", "edge", "firefox"]:
         package_target(project_root, dist_directory, target)
 
 def package_target(project_root, dist_directory, target):
@@ -31,7 +31,7 @@ def package_target(project_root, dist_directory, target):
             copy2(icon, icons_directory / icon.name)
 
     manifest = json.loads((project_root / "manifest.json").read_text(encoding="utf-8"))
-    if target == "chrome":
+    if target in ["chrome", "edge"]:
         manifest.pop("browser_specific_settings", None)
         manifest["background"].pop("scripts", None)
     elif target == "firefox":
